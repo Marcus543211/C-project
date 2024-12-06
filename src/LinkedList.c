@@ -39,3 +39,56 @@ LinkedListNode *LinkedList_append(LinkedList *ll, void *elem) {
     return node;
 }
 
+void *LinkedList_popFront(LinkedList *ll) {
+    if (ll->size == 0) {
+        return NULL;
+    }
+
+    LinkedListNode *node = ll->head;
+    void *data = node->data;
+
+    ll->head = node->next;
+    if (ll->head != NULL) {
+        ll->head->prev = NULL;
+    } else {
+        ll->tail = NULL;
+    }
+
+    free(node);
+    --ll->size;
+    return data;
+}
+
+LinkedListNode *LinkedList_find(LinkedList *ll, void *elem) {
+    LinkedListNode *current = ll->head;
+    while (current != NULL) {
+        if (current->data == elem) {
+            return current;
+        }
+        current = current->next;
+    }
+    return NULL;
+}
+
+void *LinkedList_remove(LinkedList *ll, LinkedListNode *node) {
+    if (node == NULL || ll->size == 0) {
+        return NULL;
+    }
+
+    if (node->prev != NULL) {
+        node->prev->next = node->next;
+    } else {
+        ll->head = node->next;
+    }
+
+    if (node->next != NULL) {
+        node->next->prev = node->prev;
+    } else {
+        ll->tail = node->prev;
+    }
+
+    void *data = node->data;
+    free(node);
+    --ll->size;
+    return data;
+}
