@@ -1,6 +1,9 @@
 .DS_Store
 .vscode
 
+# Ignore the executable
+src/detectCycles
+
 # Prerequisites
 *.d
 
