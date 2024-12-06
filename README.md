@@ -1,4 +1,4 @@
-# C-project
+# The C Project
 
-In which we will detect cycles..
+In which we will detect cycles.
 
