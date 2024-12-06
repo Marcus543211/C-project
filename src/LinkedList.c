@@ -40,23 +40,7 @@ LinkedListNode *LinkedList_append(LinkedList *ll, void *elem) {
 }
 
 void *LinkedList_popFront(LinkedList *ll) {
-    if (ll->size == 0) {
-        return NULL;
-    }
-
-    LinkedListNode *node = ll->head;
-    void *data = node->data;
-
-    ll->head = node->next;
-    if (ll->head != NULL) {
-        ll->head->prev = NULL;
-    } else {
-        ll->tail = NULL;
-    }
-
-    free(node);
-    --ll->size;
-    return data;
+    return LinkedList_remove(ll, ll->head);
 }
 
 LinkedListNode *LinkedList_find(LinkedList *ll, void *elem) {
