@@ -47,7 +47,7 @@ void cycleDetection(Graph *g) {
     }
 
     // if G has any edges left then
-    if (Graph_hasEdges(g)) {
+    if (g->numEdges > 0) {
         // return error // At least one cycle
         printf("CYCLE DETECTED!\n");
     // else

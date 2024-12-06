@@ -28,9 +28,6 @@ void Graph_addEdge(Graph *g, int i, int j);
 // Removes an edge from the i'th to the j'th vertex (0-indexed).
 void Graph_removeEdge(Graph *g, int i, int j);
 
-// Returns a non-zero value if the graph contains any edges.
-int Graph_hasEdges(Graph *g);
-
 // Reads a graph from the given file and returns a newly
 // constructed Graph representing it.
 // Returns a pointer to the read graph, or NULL on error.
