@@ -1,6 +1,7 @@
 #include "Graph.h"
 #include <stdlib.h>
 #include "LinkedList.h"
+#include <stdio.h>
 
 Graph *Graph_new(int n) {
     Graph *New_Graph = (Graph*)malloc(sizeof(Graph));
@@ -46,4 +47,28 @@ void Graph_removeEdge(Graph *g, int i, int j) {
     LinkedList_remove(Vertex_j->inNeighbours, to_be_removedin);
     LinkedList_remove(Vertex_i->outNeighbours, to_be_removedout);
     g->numEdges--;
+}
+
+Graph *Graph_read(const char *filename) {
+    FILE *file = fopen (filename, "r");
+    int n = 0;
+    if (fscanf(file, "%d", &n) != 1) { return NULL; }
+    char row[n+1];
+    Graph *new_graph = Graph_new(n);
+    for (int i = 0; i < n; i++) {
+        if (fscanf(file, "%s", row) != 1) { return NULL; }
+        for (int j = 0; j < n; j++) {
+            int test = row[j] - '0';
+            if (test == 1) {
+                Graph_addEdge(new_graph, i, j);
+            }
+        }
+    }
+    fclose(file);
+    return new_graph;
+}
+
+void Graph_print(Graph *g) {
+    printf("The graph has vertices: %d", g->numVertices);
+    printf("The graph has edges: %d", g->numEdges);
 }
