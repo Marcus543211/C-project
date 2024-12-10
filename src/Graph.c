@@ -69,6 +69,30 @@ Graph *Graph_read(const char *filename) {
 }
 
 void Graph_print(Graph *g) {
-    printf("The graph has vertices: %d", g->numVertices);
-    printf("The graph has edges: %d", g->numEdges);
+    printf("The graph has vertices: %d\n", g->numVertices);
+    printf("The graph has edges: %d\n", g->numEdges);
+
+    printf("\nOutgoing edges\n");
+    for (int i = 0; i < g->numVertices; i++) {
+        printf("%d: ", i);
+        Vertex *v = &g->vertices[i];
+        LinkedListNode *node = v->outNeighbours->head;
+        for (; node != NULL; node = node->next) {
+            printf("%d, ", ((Vertex*)node->data)->id);
+            if (node->next != NULL) { printf(", "); }
+        }
+        printf("\n");
+    }
+
+    printf("\nIngoing edges\n");
+    for (int i = 0; i < g->numVertices; i++) {
+        printf("%d: ", i);
+        Vertex *v = &g->vertices[i];
+        LinkedListNode *node = v->inNeighbours->head;
+        for (; node != NULL; node = node->next) {
+            printf("%d, ", ((Vertex*)node->data)->id);
+            if (node->next != NULL) { printf(", "); }
+        }
+        printf("\n");
+    }
 }

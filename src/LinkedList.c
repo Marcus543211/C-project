@@ -13,9 +13,8 @@ LinkedList *LinkedList_new() {
 
 void LinkedList_delete(LinkedList *ll) {
     LinkedListNode *node = ll->head;
-    LinkedListNode *next = node->next;
     while (node != NULL) {
-	next = node->next;
+        LinkedListNode *next = node->next;
 	free(node);
 	node = next;
     }

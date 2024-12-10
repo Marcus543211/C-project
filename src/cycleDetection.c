@@ -31,8 +31,8 @@ void cycleDetection(Graph *g) {
 
         // foreach vertex v in G with an edge e from u to v do
         // (I.e., the outgoing edges from u)
-        for (LinkedListNode *node = u->outNeighbours->head;
-                node != NULL; node = node->next) {
+        LinkedListNode *node = u->outNeighbours->head;
+        while (node != NULL) {
             Vertex *v = node->data;
             
             // if v has no other incoming edges than e then
@@ -41,8 +41,15 @@ void cycleDetection(Graph *g) {
                 LinkedList_append(S, v);
             }
 
+            // Get the next node before removing "node"
+            LinkedListNode *next = node->next;
+            
             // Remove edge e from G
+            // (This invalidates "node")
             Graph_removeEdge(g, u->id, v->id);
+
+            // Move to next node
+            node = next;
         }
     }
 
@@ -54,9 +61,9 @@ void cycleDetection(Graph *g) {
     } else {
         // return L // a topological sorted order of the vertices
         LinkedListNode *node = L->head;
-        printf("%d", ((Vertex*)node->data)->id);
         for (; node != NULL; node = node->next) {
-            printf(", %d", ((Vertex*)node->data)->id);
+            printf("%d", ((Vertex*)node->data)->id);
+            if (node->next != NULL) { printf(", "); }
         }
         printf("\n");
     }
