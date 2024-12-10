@@ -51,6 +51,7 @@ void Graph_removeEdge(Graph *g, int i, int j) {
 
 Graph *Graph_read(const char *filename) {
     FILE *file = fopen (filename, "r");
+    if (file == NULL) { return NULL; }
     int n = 0;
     if (fscanf(file, "%d", &n) != 1) { return NULL; }
     char row[n+1];
