@@ -1,16 +1,17 @@
 #include "Graph.h"
+
 #include <stdlib.h>
-#include "LinkedList.h"
 #include <stdio.h>
 
 Graph *Graph_new(int n) {
-    Graph *New_Graph = (Graph*)malloc(sizeof(Graph));
-    Vertex *arr_vertices = (Vertex*)malloc(n * sizeof(Vertex));
+    Graph *New_Graph = malloc(sizeof(Graph));
+    Vertex *arr_vertices = malloc(n * sizeof(Vertex));
     if (New_Graph == NULL || arr_vertices == NULL) { return NULL; }
     New_Graph->numVertices = n;
     New_Graph->numEdges = 0;
     New_Graph->vertices = arr_vertices;
 
+    // Initalising vertices
     for (int i = 0; i < n; i++) {
         LinkedList *llout = LinkedList_new();
         LinkedList *llin = LinkedList_new();
@@ -19,6 +20,7 @@ Graph *Graph_new(int n) {
         New_Graph->vertices[i].outNeighbours = llout;
         New_Graph->vertices[i].inNeighbours = llin;
     }
+
     return New_Graph;
 }
 
@@ -50,21 +52,25 @@ void Graph_removeEdge(Graph *g, int i, int j) {
 }
 
 Graph *Graph_read(const char *filename) {
-    FILE *file = fopen (filename, "r");
+    FILE *file = fopen(filename, "r");
     if (file == NULL) { return NULL; }
+
     int n = 0;
     if (fscanf(file, "%d", &n) != 1) { return NULL; }
-    char row[n+1];
+
     Graph *new_graph = Graph_new(n);
+    if (new_graph == NULL) { return NULL; }
+
+    char row[n+1];
     for (int i = 0; i < n; i++) {
         if (fscanf(file, "%s", row) != 1) { return NULL; }
         for (int j = 0; j < n; j++) {
-            int test = row[j] - '0';
-            if (test == 1) {
+            if (row[j] == '1') {
                 Graph_addEdge(new_graph, i, j);
             }
         }
     }
+
     fclose(file);
     return new_graph;
 }
@@ -75,25 +81,25 @@ void Graph_print(Graph *g) {
 
     printf("\nOutgoing edges\n");
     for (int i = 0; i < g->numVertices; i++) {
-        printf("%d: ", i);
         Vertex *v = &g->vertices[i];
-        LinkedListNode *node = v->outNeighbours->head;
-        for (; node != NULL; node = node->next) {
-            printf("%d, ", ((Vertex*)node->data)->id);
-            if (node->next != NULL) { printf(", "); }
-        }
-        printf("\n");
+        printf("%d: ", v->id);
+        print_vertices(v->outNeighbours);
     }
 
     printf("\nIngoing edges\n");
     for (int i = 0; i < g->numVertices; i++) {
-        printf("%d: ", i);
         Vertex *v = &g->vertices[i];
-        LinkedListNode *node = v->inNeighbours->head;
-        for (; node != NULL; node = node->next) {
-            printf("%d, ", ((Vertex*)node->data)->id);
-            if (node->next != NULL) { printf(", "); }
-        }
-        printf("\n");
+        printf("%d: ", v->id);
+        print_vertices(v->inNeighbours);
     }
+}
+
+void print_vertices(LinkedList *vertices) {
+    LinkedListNode *node = vertices->head;
+    for (; node != NULL; node = node->next) {
+        Vertex *v = node->data;
+        printf("%d", v->id);
+        if (node->next != NULL) { printf(", "); }
+    }
+    printf("\n");
 }

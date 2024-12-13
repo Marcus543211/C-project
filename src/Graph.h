@@ -6,15 +6,15 @@
 typedef struct Vertex Vertex;
 typedef struct Graph Graph;
 struct Vertex {
-	int id; // a number in [0; numVertices[
-	LinkedList *outNeighbours; // A linked list of vertices.
-	LinkedList *inNeighbours; // A linked list of vertices
+    int id; // a number in [0; numVertices[
+    LinkedList *outNeighbours; // A linked list of vertices.
+    LinkedList *inNeighbours; // A linked list of vertices
 };
 
 struct Graph {
-	int numVertices;
-	int numEdges;
-	Vertex *vertices; // An array of numVertices vertices
+    int numVertices;
+    int numEdges;
+    Vertex *vertices; // An array of numVertices vertices
 };
 
 // Allocates and constructs a new graph with n vertices.
@@ -39,5 +39,8 @@ void Graph_delete(Graph *g);
 
 // Prints some useful information about the given graph.
 void Graph_print(Graph *g);
+
+// Prints the vertices in the linked list.
+void print_vertices(LinkedList *vertices);
 
 #endif // GRAPH_H

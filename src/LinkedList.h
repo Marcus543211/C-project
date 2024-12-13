@@ -8,15 +8,15 @@ typedef struct LinkedList LinkedList;
 typedef struct LinkedListNode LinkedListNode;
 
 struct LinkedList {
-	LinkedListNode *head;
-	LinkedListNode *tail;
-	int size;
+    LinkedListNode *head;
+    LinkedListNode *tail;
+    int size;
 };
 
 struct LinkedListNode {
-	LinkedListNode *next;
-	LinkedListNode *prev;
-	void *data;
+    LinkedListNode *next;
+    LinkedListNode *prev;
+    void *data;
 };
 
 // Allocate and initialize an empty linked list.
