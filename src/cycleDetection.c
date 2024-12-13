@@ -6,24 +6,24 @@
 
 void cycleDetection(Graph *g) {
     // The list to sort into
-    LinkedList *L = LinkedList_new();
-    if (L == NULL) { return; }
+    LinkedList *l = LinkedList_new();
+    if (l == NULL) { return; }
 
     // The list of all vertices of G with no incoming edges
-    LinkedList *S = LinkedList_new();
-    if (S == NULL) { return; }
+    LinkedList *s = LinkedList_new();
+    if (s == NULL) { return; }
 
-    // Add the vertices with no incoming edges to S 
+    // Add the vertices with no incoming edges to s 
     for (int i = 0; i < g->numVertices; i++) {
         Vertex *vertex = &g->vertices[i];
         if (vertex->inNeighbours->size == 0) {
-            LinkedList_append(S, vertex);
+            LinkedList_append(s, vertex);
         }
     }
 
-    while (S->size > 0) {
-        Vertex *u = LinkedList_popFront(S);
-        LinkedList_append(L, u);
+    while (s->size > 0) {
+        Vertex *u = LinkedList_popFront(s);
+        LinkedList_append(l, u);
 
         LinkedListNode *node = u->outNeighbours->head;
         while (node != NULL) {
@@ -31,7 +31,7 @@ void cycleDetection(Graph *g) {
             
             // When v has no incoming edges other than from u
             if (v->inNeighbours->size == 1) {
-                LinkedList_append(S, v);
+                LinkedList_append(s, v);
             }
 
             // Get the next node before removing "node"
@@ -46,10 +46,10 @@ void cycleDetection(Graph *g) {
     if (g->numEdges > 0) {
         printf("CYCLE DETECTED!\n");
     } else {
-        // L is now a topological sorted order of the vertices
-        print_vertices(L);
+        // l is now a topological sorted order of the vertices
+        print_vertices(l);
     }
 
-    LinkedList_delete(L);
-    LinkedList_delete(S);
+    LinkedList_delete(l);
+    LinkedList_delete(s);
 }
